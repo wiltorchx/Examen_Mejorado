@@ -12,9 +12,9 @@ public class ClassMenuPrin {
         
         while (opcion != 4) {
             System.out.println("------- Federacion Costarricense de Futbol-------\n");
-            System.out.println("1. Inicializar Vectores.");
-            System.out.println("2. Incluir Clientes");
-            System.out.println("3. Reporte de Ventas.");
+            System.out.println("1. Ingresar datos.");
+            System.out.println("2. Inicializar arreglo");
+            System.out.println("3. Estadisticas.");
             System.out.println("4. Salir.");
             System.out.print("Seleccione una opcion: ");
             String input = sc.nextLine();
@@ -29,16 +29,15 @@ public class ClassMenuPrin {
 
             switch (opcion) {
                 case 1:
-                    ClasControlVentas.InicializarVec();
+                    ClasControlVentas. IncluirCliente();
                     break;
                 case 2:
-                    ClasControlVentas. IncluirCliente();
+                    ClasControlVentas.InicializarVec();
                     break;
                 case 3:
                     ClasControlVentas.Estadistica();
                     break;
                 case 4:
-                    
                     ClasControlVentas.Reportetodosdatos();
                     break;
                 }
