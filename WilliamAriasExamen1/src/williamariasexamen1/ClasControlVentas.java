@@ -1,4 +1,3 @@
-
 package williamariasexamen1;
 import java.util.Scanner;
 
@@ -13,6 +12,7 @@ public class ClasControlVentas {
     static boolean cedulaValida = false;
     static boolean cedulaRepetida = false;
     static String[] NombreCliente = new String[10];
+    static boolean nombreValido = false;
     static double precioEntrada1=10500;
     static double precioEntrada2=20500;
     static double precioEntrada3=25500;
@@ -34,6 +34,20 @@ public class ClasControlVentas {
     static String cedula = "0";
     static String nombre = "0";
     static int factura = 0;
+    
+   static void InicializarVec() {
+        for (int i = 0; i < 10; i++) {
+            CedulaCliente[i] = "";
+            NombreCliente[i] = "";
+            Nfactura [i] = 0.0;
+            Subtotal = 0.0;
+            CargoServi= 0.0;
+            Total = 0.0;
+            }
+            numclientes = 0;
+            System.out.println("\n Vectores inicializados correctamente.\n"); 
+    }
+    
    static void IncluirCliente() {
        
         if (numclientes >= 10) {
@@ -81,9 +95,22 @@ public class ClasControlVentas {
                 cedulaValida = true;
                 }
         } while (!cedulaValida);
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+ 
+        sc.nextLine();// lo use porque tenia un error, me mostraba inmediatamente el msj del if de nose porque.
+        do {
+           System.out.print("\nIngrese el nombre del estudiante (solo debe ser uno): ");
+           nombre = sc.nextLine();
+           nombreValido = false;
+
+           if (!nombre.matches("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+")) {
+               System.out.println("\n\033[1mEl nombre no debe contener espacios ni números \033[0m\n");
+           } else {
+               NombreCliente[numclientes] = nombre;
+               nombreValido = true;
+           }
+       } while (!nombreValido);
         
-        System.out.print("Ingrese su nombre: ");
-        nombre = sc.next();
         Nfactura[numclientes] = factura;
         CedulaCliente[numclientes] = cedula;
         NombreCliente[numclientes] = nombre;
@@ -91,6 +118,45 @@ public class ClasControlVentas {
         System.out.println("\n El Cliente " + nombre +" Se ha agregado correctamente.\n");
         Menucompraentrada();
     }
+    static void Menucompraentrada() {
+        int opcion = 0;
+        Scanner sc = new Scanner(System.in);
+        while (opcion != 4) {
+            System.out.println("\n-------Submenu Venta de Entradas-------\n");
+            System.out.println("1. Entradas Localidad 1 (Sol Norte/Sur).");
+            System.out.println("2. Entradas Localidad 2 (Sombra Este/Oeste).");
+            System.out.println("3. Entradas Localidad 3 (Preferencial).");
+            System.out.println("4. Regresar Menu Principal.");
+            System.out.print("Seleccione una opcion:");
+            String input = sc.nextLine();
+            
+        while (!input.matches("[1-4]") || !Character.isDigit(input.charAt(0))) { // valida la entrada para que sea un número del 1 al 3.
+               System.out.println("\nLa opcion: \"" + input + "\" es invalida.");
+               System.out.print("Seleccione una opcion valida del menu (numero): ");
+                input = sc.nextLine();
+            }
+
+        opcion = Integer.parseInt(input);
+        
+        switch (opcion) {
+                     
+            case 1:
+                Localidad1();
+                break;
+            case 2:
+               Localidad2();
+                break;
+            case 3:
+               Localidad3();
+                break;
+            case 4:
+                System.out.println("Regresando al menu principal...");
+                return;
+            }
+        }
+                sc.close();      
+    }
+    
     static void Localidad1() {
         System.out.println("Has ingresado a Entradas Localidad 1 (Sol Norte/Sur).");
         System.out.println("Tienen un valor de 10500 colones.");
@@ -145,18 +211,17 @@ public class ClasControlVentas {
         System.out.println("Tienen un valor de 25500 colones.");
         System.out.print("Cuantas Entradas desea comprar: ");
         entradasvendidas = sc.nextInt();
+        int posicion = numclientes - 1;
         while (entradasvendidas > 4) {
             System.out.println("No se pueden comprar mas de 4 entradas por cliente.");
             System.out.print("Cuantas Entradas desea comprar: ");
             entradasvendidas = sc.nextInt();
         }
-        if (entradasvendidas + contadorentradasL3[numclientes-1] > 4) {
+        if (entradasvendidas + contadorentradasL1[posicion] + contadorentradasL2[posicion] + contadorentradasL3[posicion] > 4) {
             System.out.println("No se pueden comprar mas de 4 entradas por cliente.");
             return;
         }
-
-       int posicion = numclientes-1; 
-
+        
         NombreLocalidad3[posicion] = NombreLocalidades[3];
         contadorentradasL3[posicion] += entradasvendidas;
         AcumuladorVentasL3[posicion] += entradasvendidas * precioEntrada3;
@@ -167,15 +232,20 @@ public class ClasControlVentas {
     static void Estadistica() {
         if (numclientes > 0) {
             for (int i = 0; i < numclientes; i++) {
+                System.out.println("----------------------------------------\n");
                 System.out.println("Numero de Factura: " + Nfactura[i]);
                 System.out.println("Cedula del cliente: " + CedulaCliente[i]);
                 System.out.println("Nombre del comprador: " + NombreCliente[i]);
+                System.out.println("----------------------------------------\n");
                 System.out.println("Localidad : " +NombreLocalidad1[i] );
                 System.out.println("Cantidad de entradas vendidas: " + contadorentradasL1[i]);
+                System.out.println("----------------------------------------\n");
                 System.out.println("Localidad : " +NombreLocalidad2[i] );
                 System.out.println("Cantidad de entradas vendidas: " + contadorentradasL2[i]);
+                System.out.println("----------------------------------------\n");
                 System.out.println("Localidad : " +NombreLocalidad3[i] );
                 System.out.println("Cantidad de entradas vendidas: " + contadorentradasL3[i]);
+                System.out.println("----------------------------------------\n");
                 System.out.println("Subtotal): " +(Subtotal=AcumuladorVentasL1[i]+AcumuladorVentasL2[i]+AcumuladorVentasL3[i]));
                 System.out.println("Cargos por servicio): " + (CargoServi = contadorentradasL1[i]*1000 +contadorentradasL2[i]*1000+contadorentradasL3[i]*1000));
                 System.out.println("Total: " + (Total=Subtotal+CargoServi)) ;
@@ -186,59 +256,7 @@ public class ClasControlVentas {
         }
     }
     
-    static void Menucompraentrada() {
-        int opcion = 0;
-        Scanner sc = new Scanner(System.in);
-        while (opcion != 4) {
-            System.out.println("\n-------Submenu Venta de Entradas-------\n");
-            System.out.println("1. Entradas Localidad 1 (Sol Norte/Sur).");
-            System.out.println("2. Entradas Localidad 2 (Sombra Este/Oeste).");
-            System.out.println("3. Entradas Localidad 3 (Preferencial).");
-            System.out.println("4. Regresar Menu Principal.");
-            System.out.print("Seleccione una opcion:");
-            String input = sc.nextLine();
-            
-        while (!input.matches("[1-4]") || !Character.isDigit(input.charAt(0))) { // valida la entrada para que sea un número del 1 al 3.
-               System.out.println("\nLa opcion: \"" + input + "\" es invalida.");
-               System.out.print("Seleccione una opcion valida del menu (numero): ");
-                input = sc.nextLine();
-            }
-
-        opcion = Integer.parseInt(input);
-        
-        switch (opcion) {
-                     
-            case 1:
-                Localidad1();
-                break;
-            case 2:
-               Localidad2();
-                break;
-            case 3:
-               Localidad3();
-                break;
-            case 4:
-                System.out.println("Regresando al menu principal...");
-                return;
-            }
-        }
-                sc.close();      
-    }
-
-    static void InicializarVec() {
-        for (int i = 0; i < 10; i++) {
-            CedulaCliente[i] = "";
-            NombreCliente[i] = "";
-            Nfactura [i] = 0.0;
-            Subtotal = 0.0;
-            CargoServi= 0.0;
-            Total = 0.0;
-            }
-            numclientes = 0;
-            System.out.println("\n Vectores inicializados correctamente.\n"); 
-    }
-    
-static void Reportetodosdatos(){
+    static void Reportetodosdatos(){
         for (int i = 0; i < Nfactura.length; i++) { // imprime los datos de los clientes que unicamente compraron.
             if (Nfactura[i] != 0) { 
             System.out.println("Cantidad Entradas Localidad 1 (Sol Norte/Sur): " + contadorentradasL1[i]); 
@@ -250,4 +268,4 @@ static void Reportetodosdatos(){
             }
         }
     }     
- }           
+}           
