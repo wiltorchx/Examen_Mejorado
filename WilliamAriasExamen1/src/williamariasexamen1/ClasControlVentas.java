@@ -21,7 +21,7 @@ public class ClasControlVentas {
     static double Total =0;
     static int numclientes = 1;
     static int entradasvendidas = 0;
-    static int[] contadorentradasL1 = new int[10]; //todo esto se puede resumir con matrices, pero para no enredarme, luego vuelvo hacer el examen para probar.
+    static int[] contadorentradasL1 = new int[10]; //todo esto se puede resumir con matrices, pero para no enredarme luego vuelvo hacer el examen para probar.
     static int[] AcumuladorVentasL1 = new int[10];
     static int[] contadorentradasL2 = new int[10];
     static int[] AcumuladorVentasL2 = new int[10];
@@ -48,7 +48,7 @@ public class ClasControlVentas {
             System.out.println("\n Vectores inicializados correctamente.\n"); 
     }
     
-   static void IncluirCliente() {
+    static void IncluirCliente() {
        
         if (numclientes >= 10) {
             System.out.println("No se pueden incluir mas de 10 clientes.");
@@ -69,11 +69,11 @@ public class ClasControlVentas {
         }
     }
     
-    if (!Nfacturarepetida) {
-        Nfacturavalida = true;
-    }
-    
-} while (!Nfacturavalida);
+        if (!Nfacturarepetida) {
+            Nfacturavalida = true;
+        }
+
+    } while (!Nfacturavalida);
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         do {
@@ -116,8 +116,9 @@ public class ClasControlVentas {
         NombreCliente[numclientes] = nombre;
         numclientes++;
         System.out.println("\n El Cliente " + nombre +" Se ha agregado correctamente.\n");
-        Menucompraentrada();
+        Menucompraentrada(); //Lleva la menu de compras de entrada una vez se ingresen todos los datos del cliente.
     }
+    
     static void Menucompraentrada() {
         int opcion = 0;
         Scanner sc = new Scanner(System.in);
@@ -130,7 +131,7 @@ public class ClasControlVentas {
             System.out.print("Seleccione una opcion:");
             String input = sc.nextLine();
             
-        while (!input.matches("[1-4]") || !Character.isDigit(input.charAt(0))) { // valida la entrada para que sea un número del 1 al 3.
+        while (!input.matches("[1-4]") || !Character.isDigit(input.charAt(0))) { // valida la entrada para que sea un número del 1 al 4.
                System.out.println("\nLa opcion: \"" + input + "\" es invalida.");
                System.out.print("Seleccione una opcion valida del menu (numero): ");
                 input = sc.nextLine();
@@ -158,10 +159,12 @@ public class ClasControlVentas {
     }
     
     static void Localidad1() {
+        
         System.out.println("Has ingresado a Entradas Localidad 1 (Sol Norte/Sur).");
         System.out.println("Tienen un valor de 10500 colones.");
         System.out.print("Cuantas Entradas desea comprar: ");
         entradasvendidas = sc.nextInt();
+        
         int posicion = numclientes - 1; //es necesario para que guarde la informacion asociada a cada cliente.
                                         //lleva el control del número de clientes que han sido registrados en el sistema.
         while (entradasvendidas > 4) { 
@@ -175,20 +178,23 @@ public class ClasControlVentas {
             return;
         }
 
-        NombreLocalidad1[posicion] = NombreLocalidades[1];
-        contadorentradasL1[posicion] += entradasvendidas;
-        AcumuladorVentasL1[posicion] += entradasvendidas * precioEntrada1;
+        NombreLocalidad1[posicion] = NombreLocalidades[1]; //es simplemente para guardar el nombre de la Localidad en un espacio.
+        contadorentradasL1[posicion] += entradasvendidas;  //guarda en un espacio la cantidad de entradas compradas por los clientes.
+        AcumuladorVentasL1[posicion] += entradasvendidas * precioEntrada1; //guarda en un espacio el valor en dinero de las entradas compradas por los clientes.
 
         System.out.println("\n Se han vendido "+entradasvendidas+" entradas en Localidad 1 a "+NombreCliente[posicion]+".");
         System.out.println("Total Vendido: "+AcumuladorVentasL1[posicion]+" colones.\n");
-}
+    }
+    
     static void Localidad2() {
         
         System.out.println("Has ingresado a Entradas Localidad 2 (Sol Norte/Sur).");
         System.out.println("Tienen un valor de 20500 colones.");
         System.out.print("Cuantas Entradas desea comprar: ");
         entradasvendidas = sc.nextInt();
-        int posicion = numclientes - 1; // índice del nuevo cliente
+        
+        int posicion = numclientes - 1;
+        
         while (entradasvendidas > 4) {
             System.out.println("No se pueden comprar mas de 4 entradas.");
             System.out.print("Cuantas Entradas desea comprar: ");
@@ -197,21 +203,23 @@ public class ClasControlVentas {
         if (entradasvendidas + contadorentradasL1[posicion] + contadorentradasL2[posicion] + contadorentradasL3[posicion] > 4) {
             System.out.println("No se pueden comprar mas de 4 entradas por cliente.");
             return;
-    }
+        }
         NombreLocalidad2[posicion] = NombreLocalidades[2];
        contadorentradasL2[posicion] += entradasvendidas;
        AcumuladorVentasL2[posicion] += entradasvendidas * precioEntrada2;
 
        System.out.println("\n Se han vendido "+entradasvendidas+" entradas en Localidad 2 a "+NombreCliente[posicion]+".");
        System.out.println("Total Vendido: "+AcumuladorVentasL2[posicion]+" colones.\n");
-}
+    }
     
     static void Localidad3() {
+        
         System.out.println("Has ingresado a Entradas Localidad 3 (Preferencial).");
         System.out.println("Tienen un valor de 25500 colones.");
         System.out.print("Cuantas Entradas desea comprar: ");
         entradasvendidas = sc.nextInt();
         int posicion = numclientes - 1;
+        
         while (entradasvendidas > 4) {
             System.out.println("No se pueden comprar mas de 4 entradas por cliente.");
             System.out.print("Cuantas Entradas desea comprar: ");
@@ -227,9 +235,10 @@ public class ClasControlVentas {
         AcumuladorVentasL3[posicion] += entradasvendidas * precioEntrada3;
         System.out.println("\n Se han vendido "+entradasvendidas+" entradas en Localidad 3 a "+NombreCliente[posicion]+".");
         System.out.println("Total Vendido: "+AcumuladorVentasL3[posicion]+" colones.\n");
-}
+    }
     
     static void Estadistica() {
+        
         if (numclientes > 0) {
             for (int i = 0; i < numclientes; i++) {
                 System.out.println("----------------------------------------\n");
@@ -257,6 +266,7 @@ public class ClasControlVentas {
     }
     
     static void Reportetodosdatos(){
+        
         for (int i = 0; i < Nfactura.length; i++) { // imprime los datos de los clientes que unicamente compraron.
             if (Nfactura[i] != 0) { 
             System.out.println("----------------------------------------------------");    
