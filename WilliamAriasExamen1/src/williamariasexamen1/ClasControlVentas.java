@@ -259,12 +259,16 @@ public class ClasControlVentas {
     static void Reportetodosdatos(){
         for (int i = 0; i < Nfactura.length; i++) { // imprime los datos de los clientes que unicamente compraron.
             if (Nfactura[i] != 0) { 
+            System.out.println("----------------------------------------\n");    
             System.out.println("Cantidad Entradas Localidad 1 (Sol Norte/Sur): " + contadorentradasL1[i]); 
-            System.out.println("Acumulado Dinero Localidad 1 (Sol Norte/Sur): " + AcumuladorVentasL1[i] ); 
+            System.out.println("Acumulado Dinero Localidad 1 (Sol Norte/Sur): " + AcumuladorVentasL1[i] );
+            System.out.println("----------------------------------------\n");
             System.out.println("Cantidad Entradas Localidad 2 (Sombra Este/Oeste): " + contadorentradasL2[i]);
             System.out.println("Acumulado Dinero Localidad 2 (Sombra Este/Oeste): " + AcumuladorVentasL2[i] );
+            System.out.println("----------------------------------------\n");    
             System.out.println("Cantidad Entradas Localidad Preferencial 3: " + contadorentradasL3[i]);
             System.out.println("Acumulado Dinero Localidad Preferencial 3: " + AcumuladorVentasL3[i] );
+            System.out.println("----------------------------------------\n");    
             }
         }
     }     
